@@ -1,0 +1,271 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
+Bundler/OrderedGems: # gems are grouped by functionality, but sorted alphabetically within their groups
+  Enabled: true
+
+Layout/ArgumentAlignment: # ignore for now
+  Enabled: false
+Layout/ArrayAlignment:
+  Enabled: true
+Layout/BlockAlignment:
+  Enabled: true
+Layout/BlockEndNewline: # ignore for now
+  Enabled: false
+Layout/ClosingParenthesisIndentation:
+  Enabled: true
+Layout/DotPosition:
+  Enabled: true
+Layout/ElseAlignment:
+  Enabled: true
+Layout/EmptyLineAfterGuardClause:
+  Enabled: true
+Layout/EmptyLines:
+  Enabled: true
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: true
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: false
+Layout/EmptyLinesAroundClassBody:
+  Enabled: false
+Layout/EmptyLinesAroundExceptionHandlingKeywords:
+  Enabled: false
+Layout/EmptyLinesAroundMethodBody:
+  Enabled: false
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: false
+Layout/EmptyLineBetweenDefs:
+  Enabled: true
+Layout/EndAlignment:
+  Enabled: true
+Layout/ExtraSpacing:
+  Enabled: true
+Layout/FirstArrayElementIndentation: # not for now
+  Enabled: false
+Layout/FirstHashElementIndentation: # not for now
+  Enabled: false
+Layout/HashAlignment: # not for now
+  Enabled: false
+Layout/HeredocIndentation: # not for now
+  Enabled: false
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: indented_internal_methods
+Layout/IndentationWidth:
+  Enabled: true
+Layout/LeadingCommentSpace:
+  Enabled: true
+Layout/LeadingEmptyLines:
+  Enabled: true
+Layout/LineEndStringConcatenationIndentation: # ignore because this rule has an exception on blocks, which our code does not comply with.
+  Enabled: false
+Layout/LineLength:
+  Max: 200
+Layout/MultilineBlockLayout: # ignore for now
+  Enabled: false
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+Layout/MultilineMethodCallIndentation: # ignore for now
+  Enabled: false
+Layout/ParameterAlignment:
+  Enabled: true
+Layout/SpaceAfterColon:
+  Enabled: true
+Layout/SpaceAfterComma:
+  Enabled: true
+Layout/SpaceAroundOperators:
+  Enabled: true
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+Layout/SpaceBeforeBrackets:
+  Exclude:
+    - db/migrate/*
+Layout/SpaceBeforeComma:
+  Enabled: true
+Layout/SpaceInLambdaLiteral:
+  Enabled: true
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: true
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+Layout/SpaceInsideParens:
+  Enabled: true
+Layout/TrailingEmptyLines:
+  Enabled: true
+Layout/TrailingWhitespace:
+  Enabled: true
+
+Lint/MissingSuper:
+  Enabled: true
+Lint/AmbiguousBlockAssociation:
+  Enabled: true
+  Exclude:
+    - spec/**/*
+Lint/AssignmentInCondition: # disable because it's easier to read when we only use the variable in block
+  Enabled: false
+Lint/NestedMethodDefinition:
+  Enabled: true
+Lint/RaiseException:
+  Enabled: true
+Lint/RedundantDirGlobSort: # Disable because of a bug in current rubocop. Remove when it's fixed
+  Enabled: false
+Lint/RedundantSplatExpansion:
+  Enabled: true
+Lint/RescueException:
+  Enabled: true
+Lint/ShadowingOuterLocalVariable:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+Lint/SuppressedException:
+  Enabled: true
+  Exclude:
+    - rakelib/*
+    - Rakefile
+Lint/UnusedBlockArgument:
+  Enabled: true
+Lint/UnusedMethodArgument:
+  Enabled: true
+Lint/UriRegexp:
+  Enabled: true
+Lint/UselessAssignment:
+  Enabled: true
+
+Metrics/AbcSize:
+  Max: 45
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - rakelib/*
+    - spec/**/*
+    - db/**/*
+    - apps/**/application.rb
+Metrics/ClassLength:
+  Max: 200
+Metrics/CyclomaticComplexity:
+  Max: 10
+Metrics/MethodLength:
+  Max: 35
+Metrics/ParameterLists:
+  Max: 7
+Metrics/PerceivedComplexity:
+  Max: 20
+
+Naming/AccessorMethodName:
+  Enabled: false
+Naming/InclusiveLanguage: # disable explicitly until Rubocop sets it to be disabled by deafult
+  Enabled: false
+Naming/PredicateName:
+  Enabled: true
+Naming/RescuedExceptionsVariableName:
+  Enabled: true
+Naming/VariableNumber: # we currently always use underscore for variable with number
+  Enabled: false
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+Style/AndOr:
+  Enabled: true
+Style/BlockDelimiters:
+  Enabled: true
+  Exclude:
+    - spec/**/*
+Style/ClassAndModuleChildren: # compact style is sometimes more readable
+  Enabled: false
+Style/ColonMethodCall:
+  Enabled: true
+Style/CollectionMethods:
+  Enabled: true
+Style/Documentation:
+  Enabled: false
+Style/DoubleNegation:
+  Enabled: false
+Style/EmptyElse:
+  Enabled: true
+Style/EmptyLiteral:
+  Enabled: true
+Style/EvalWithLocation:
+  Enabled: false
+Style/FetchEnvVar:
+  Enabled: false
+Style/FrozenStringLiteralComment: # we only add this comment when necessary
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+Style/IfUnlessModifier: # following this rule can make line very long
+  Enabled: false
+Style/InverseMethods:
+  Enabled: true
+Style/Lambda:
+  Enabled: true
+Style/LambdaCall:
+  Enabled: true
+Style/ModuleFunction:
+  Enabled: true
+Style/MutableConstant:
+  Enabled: true
+Style/MultilineBlockChain:
+  Enabled: false
+Style/NonNilCheck:
+  Enabled: true
+Style/NumericLiterals:
+  Enabled: false
+Style/OpenStructUse:
+  Enabled: true
+  Exclude:
+    - spec/support/**/*.rb
+Style/ParenthesesAroundCondition:
+  Enabled: true
+Style/PercentLiteralDelimiters:
+  Enabled: false
+Style/Proc:
+  Enabled: true
+Style/RaiseArgs:
+  Enabled: true
+Style/RedundantBegin:
+  Enabled: true
+Style/RedundantFreeze:
+  Enabled: true
+Style/RedundantInterpolation:
+  Enabled: true
+Style/RedundantParentheses:
+  Enabled: true
+Style/RescueStandardError:
+  Enabled: true
+Style/SafeNavigation:
+  Enabled: false
+Style/SelfAssignment:
+  Enabled: true
+Style/SingleLineMethods: # we use single line method for errors
+  Enabled: false
+Style/StringLiterals:
+  Enabled: true
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+Style/SymbolArray: # ignore for now
+  Enabled: false
+Style/SymbolProc:
+  Enabled: true
+Style/TrailingCommaInArguments:
+  Enabled: true
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+Style/TrailingUnderscoreVariable:
+  Enabled: false
+Style/UnpackFirst:
+  Enabled: true
+Style/WordArray: # ignore for now
+  Enabled: false
