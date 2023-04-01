@@ -7,9 +7,20 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 
+gem 'dotenv-rails'
+
 # ScyllaDB
 gem 'cassandra-driver'
 gem 'sorted_set'
+
+# Auth
+gem 'devise'
+gem 'doorkeeper'
+gem 'doorkeeper-jwt'
+gem 'doorkeeper-openid_connect'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 
 group :test, :development do
   gem 'pry-byebug', '~> 3.10'

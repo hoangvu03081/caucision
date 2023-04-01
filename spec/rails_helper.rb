@@ -27,6 +27,8 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 RSpec.configure do |config|
+  config.include Devise::Test::ControllerHelpers, type: :controller
+
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
 
