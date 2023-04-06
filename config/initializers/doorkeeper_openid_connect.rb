@@ -1,21 +1,16 @@
 # frozen_string_literal: true
 
-Doorkeeper::OpenidConnect.configure do
+Doorkeeper::OpenidConnect.configure do # rubocop:disable Metrics/BlockLength
   issuer do |_resource_owner, _application|
-    'issuer string'
+    'https://www.caucision.com'
   end
 
-  signing_key <<~KEY
-    -----BEGIN RSA PRIVATE KEY-----
-    ....
-    -----END RSA PRIVATE KEY-----
-  KEY
+  signing_key ENV.fetch('SIGNING_KEY')
 
   subject_types_supported [:public]
 
   resource_owner_from_access_token do |access_token|
-    # Example implementation:
-    # User.find_by(id: access_token.resource_owner_id)
+    User.find_by(id: access_token.resource_owner_id)
   end
 
   auth_time_from_resource_owner do |resource_owner|
@@ -42,12 +37,8 @@ Doorkeeper::OpenidConnect.configure do
     # redirect_to account_select_url
   end
 
-  subject do |resource_owner, application|
-    # Example implementation:
-    # resource_owner.id
-
-    # or if you need pairwise subject identifier, implement like below:
-    # Digest::SHA256.hexdigest("#{resource_owner.id}#{URI.parse(application.redirect_uri).host}#{'your_secret_salt'}")
+  subject do |resource_owner, _application|
+    resource_owner.id
   end
 
   # Protocol to use when generating URIs for the discovery endpoint,
@@ -59,6 +50,13 @@ Doorkeeper::OpenidConnect.configure do
   # Expiration time on or after which the ID Token MUST NOT be accepted for processing. (default 120 seconds).
   # expiration 600
 
+  claims do
+    claim :email, response: [:id_token, :user_info], &:email
+    claim :name, response: [:id_token, :user_info], &:name
+    claim :first_name, response: [:id_token, :user_info], &:first_name
+    claim :last_name, response: [:id_token, :user_info], &:last_name
+    claim :image, response: [:id_token, :user_info], &:image
+  end
   # Example claims:
   # claims do
   #   normal_claim :_foo_ do |resource_owner|

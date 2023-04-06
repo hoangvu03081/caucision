@@ -5,22 +5,22 @@ class User < ApplicationRecord
          :recoverable, :confirmable, :omniauthable,
          omniauth_providers: %i[google_oauth2]
 
-  UPSERT_USER_PROVIDERS = %w[google_oauth2].freeze
+  USER_INFO_FIELDS = %w[name first_name last_name image].freeze
 
   def self.from_omniauth(access_token)
     provider = access_token['provider']
     email = access_token.info['email']
+    user_info = access_token.info.slice(*USER_INFO_FIELDS)
+
+    upsert_params = { provider:, email:, **user_info }
 
     user = User.find_by(email:)
 
-    if user.nil? && UPSERT_USER_PROVIDERS.include?(provider)
-      user = User.create!(
-        email:,
-        provider:,
-        confirmed_at: Time.now
-      )
+    if user
+      user.update!(**upsert_params)
+      user
+    else
+      User.create!(**upsert_params)
     end
-
-    user && user.provider != provider ? nil : user
   end
 end
