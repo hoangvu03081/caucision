@@ -13,6 +13,7 @@ class User < ApplicationRecord
     user_info = access_token.info.slice(*USER_INFO_FIELDS)
 
     upsert_params = { provider:, email:, **user_info }
+    Rails.logger.info(upsert_params)
 
     user = User.find_by(email:)
 
