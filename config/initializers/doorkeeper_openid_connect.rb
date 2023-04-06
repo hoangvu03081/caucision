@@ -51,11 +51,21 @@ Doorkeeper::OpenidConnect.configure do # rubocop:disable Metrics/BlockLength
   # expiration 600
 
   claims do
-    claim :email, response: [:id_token, :user_info], &:email
-    claim :name, response: [:id_token, :user_info], &:name
-    claim :first_name, response: [:id_token, :user_info], &:first_name
-    claim :last_name, response: [:id_token, :user_info], &:last_name
-    claim :image, response: [:id_token, :user_info], &:image
+    claim :name, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.name
+    end
+
+    claim :first_name, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.first_name
+    end
+
+    claim :last_name, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.last_name
+    end
+
+    claim :image, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.picture
+    end
   end
   # Example claims:
   # claims do
