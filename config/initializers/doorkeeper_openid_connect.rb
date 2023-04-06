@@ -64,7 +64,7 @@ Doorkeeper::OpenidConnect.configure do # rubocop:disable Metrics/BlockLength
     end
 
     claim :image, response: [:id_token, :user_info] do |resource_owner|
-      resource_owner.picture
+      resource_owner.image
     end
   end
   # Example claims:
