@@ -26,6 +26,34 @@ class ProjectsController < ApplicationController
     end
   end
 
+  params_for(:update) do
+    required(:id).filled(:str?) # TODO: Update to uuid v4
+    optional(:name).filled(:str?)
+    optional(:description).filled(:str?)
+  end
+
+  def update
+    project = Project.find_by(id: params[:id], user_id: current_user.id)
+
+    if project
+      project.update(params)
+      render(json: project.reload)
+    else
+      render_errors(Errors::NotFoundError.build(Project, params[:id]))
+    end
+  end
+
+  def destroy
+    project = Project.find_by(id: params[:id], user_id: current_user.id)
+
+    if project
+      project.destroy # TODO: Update logic for delete cascade
+      render(status: 200)
+    else
+      render_errors(Errors::NotFoundError.build(Project, params[:id]))
+    end
+  end
+
   def current_user
     if Rails.env.development?
       User.first
