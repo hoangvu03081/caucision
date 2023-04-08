@@ -49,7 +49,7 @@ module ParameterValidation
         message = validation.errors.messages.map do |m|
           "#{m.path.join('->')}: #{m}"
         end.join(', ')
-        render_error ::Errors::InvalidParamsError.new(message)
+        render_errors ::Errors::InvalidParamsError.new(message)
       end
     end
 end

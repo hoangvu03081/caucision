@@ -12,11 +12,10 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    preferred_auth_method = request.params[:connection] || DEFAULT_AUTHENTICATION_METHOD
-
     if current_user
       current_user
     else
+      preferred_auth_method = request.params[:connection] || DEFAULT_AUTHENTICATION_METHOD
       redirect_to("/users/auth/#{preferred_auth_method}")
       nil
     end
