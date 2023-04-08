@@ -22,7 +22,12 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 
+# API Handling
+gem 'active_model_serializers'
+gem 'dry-validation'
+
 group :test, :development do
+  gem 'awesome_print'
   gem 'pry-byebug', '~> 3.10'
   gem 'rubocop', require: false
   gem 'yamllint'

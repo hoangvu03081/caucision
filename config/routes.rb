@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   # end
 
   get 'temporary', action: :index, controller: 'temporary'
+
+  resources :projects
 end
