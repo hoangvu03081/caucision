@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
 
   params_for(:create) do
     required(:name).filled(:str?)
-    optional(:description).filled(:str?)
+    optional(:description).value(:str?)
   end
 
   def create
@@ -29,7 +29,7 @@ class ProjectsController < ApplicationController
   params_for(:update) do
     required(:id).filled(:str?) # TODO: Update to uuid v4
     optional(:name).filled(:str?)
-    optional(:description).filled(:str?)
+    optional(:description).value(:str?)
   end
 
   def update
