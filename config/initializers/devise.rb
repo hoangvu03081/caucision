@@ -10,8 +10,8 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   config.omniauth :google_oauth2,
-                  ENV.fetch('GOOGLE_CLIENT_ID'),
-                  ENV.fetch('GOOGLE_CLIENT_SECRET'),
+                  Rails.application.credentials[:google_client_id],
+                  Rails.application.credentials[:google_client_secret],
                   prompt: 'select_account'
 
   OmniAuth.config.allowed_request_methods = [:get]

@@ -5,7 +5,7 @@ Doorkeeper::OpenidConnect.configure do # rubocop:disable Metrics/BlockLength
     'https://www.caucision.com'
   end
 
-  signing_key ENV.fetch('SIGNING_KEY')
+  signing_key Rails.application.credentials[:signing_key]
 
   subject_types_supported [:public]
 

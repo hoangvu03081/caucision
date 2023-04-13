@@ -9,6 +9,8 @@ gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 
 gem 'dotenv-rails'
 
+gem 'http'
+
 # ScyllaDB
 gem 'cassandra-driver'
 gem 'sorted_set'
