@@ -15,6 +15,8 @@ gem 'http'
 gem 'cassandra-driver'
 gem 'sorted_set'
 
+gem 'polars-df'
+
 # Auth
 gem 'devise'
 gem 'doorkeeper'

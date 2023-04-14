@@ -241,6 +241,7 @@ GEM
     parser (3.2.1.1)
       ast (~> 2.4.1)
     pg (1.4.6)
+    polars-df (0.4.0-arm64-darwin)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -381,6 +382,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
   pg (~> 1.1)
+  polars-df
   pry-byebug (~> 3.10)
   puma (~> 5.0)
   rack-cors
