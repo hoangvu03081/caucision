@@ -120,6 +120,9 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    dry-auto_inject (1.0.1)
+      dry-core (~> 1.0)
+      zeitwerk (~> 2.6)
     dry-configurable (1.0.1)
       dry-core (~> 1.0, < 2)
       zeitwerk (~> 2.6)
@@ -129,6 +132,10 @@ GEM
     dry-inflector (1.0.0)
     dry-initializer (3.1.1)
     dry-logic (1.5.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 1.0, < 2)
+      zeitwerk (~> 2.6)
+    dry-monads (1.6.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0, < 2)
       zeitwerk (~> 2.6)
@@ -374,6 +381,8 @@ DEPENDENCIES
   doorkeeper-jwt
   doorkeeper-openid_connect
   dotenv-rails
+  dry-auto_inject
+  dry-monads
   dry-validation
   factory_bot (~> 6.2)
   fuubar

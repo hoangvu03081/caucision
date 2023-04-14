@@ -13,5 +13,9 @@ Rails.application.routes.draw do
 
   get 'temporary', action: :index, controller: 'temporary'
 
-  resources :projects
+  resources :projects do
+    member do
+      post :import, to: 'projects#import_file'
+    end
+  end
 end

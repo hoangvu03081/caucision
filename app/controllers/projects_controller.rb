@@ -54,11 +54,28 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def current_user
-    if Rails.env.development?
-      User.first
-    elsif doorkeeper_token
-      User.find(doorkeeper_token.resource_owner_id)
-    end
+  params_for(:import_file) do
+    required(:file).filled
   end
+
+  def import_file
+    result = Interactors::ImportFile.new.call(params, current_user)
+
+    if result.success?
+      render :ok
+    else
+      render_errors(result.failure)
+    end
+
+  end
+
+  private
+
+    def current_user
+      if Rails.env.development?
+        User.first
+      elsif doorkeeper_token
+        User.find(doorkeeper_token.resource_owner_id)
+      end
+    end
 end

@@ -9,7 +9,6 @@ module Users
 
     private
 
-      def respond_to_on_destroy
-      end
+      def respond_to_on_destroy; end
   end
 end

@@ -18,6 +18,7 @@ gem 'sorted_set'
 gem 'polars-df'
 
 # Auth
+gem 'activerecord-session_store'
 gem 'devise'
 gem 'doorkeeper'
 gem 'doorkeeper-jwt'
@@ -25,10 +26,11 @@ gem 'doorkeeper-openid_connect'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
-gem 'activerecord-session_store'
 
 # API Handling
 gem 'active_model_serializers'
+gem 'dry-auto_inject'
+gem 'dry-monads'
 gem 'dry-validation'
 
 group :test, :development do

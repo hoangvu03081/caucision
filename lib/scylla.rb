@@ -9,5 +9,6 @@ module Scylla
   end
 
   module PreparedStatements
+    CREATE_KEYSPACE = ''.freeze
   end
 end
