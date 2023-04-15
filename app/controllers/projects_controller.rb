@@ -54,12 +54,13 @@ class ProjectsController < ApplicationController
     end
   end
 
-  params_for(:import_file) do
+  params_for(:import_data) do
     required(:file).filled
+    required(:id).filled(:str?)
   end
 
-  def import_file
-    result = Interactors::ImportFile.new.call(params, current_user)
+  def import_data
+    result = Interactors::ImportData.new.call(params, current_user)
 
     if result.success?
       render :ok

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     member do
-      post :import, to: 'projects#import_file'
+      post :import, to: 'projects#import_data'
     end
   end
 end

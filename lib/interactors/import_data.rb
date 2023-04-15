@@ -1,5 +1,5 @@
 module Interactors
-  class ImportFile < BaseInteractor
+  class ImportData < BaseInteractor
 
     REQUIRED_COLUMNS = %w(promotion outcome user_id).freeze
 
@@ -12,10 +12,10 @@ module Interactors
       end
 
       project = Project.find_by(id: params[:id], user_id: user.id)
-      return Failure(Error::NotFoundError.build(Project, params[:id])) unless project
+      return Failure(Errors::NotFoundError.build(Project, params[:id])) unless project
 
       project.update!(data_imported: true)
-      Success
+      Success()
     end
 
     private

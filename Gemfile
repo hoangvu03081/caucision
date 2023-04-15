@@ -42,7 +42,7 @@ end
 
 group :test do
   gem 'database_cleaner-active_record'
-  gem 'factory_bot', '~> 6.2'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'fuubar'
   gem 'rspec-rails'
