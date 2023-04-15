@@ -44,4 +44,9 @@ module Errors
       new("Resource not found: #{model.name} #{id}")
     end
   end
+
+  class AlreadyImportedError < BaseError
+    code 'CA1003'
+    default_message 'Data has already been imported before'
+  end
 end

@@ -1,5 +1,6 @@
 module Interactors
   class ImportData < BaseInteractor
+    include ::Dependency['create_table', 'batch_insert']
 
     REQUIRED_COLUMNS = %w(promotion outcome user_id).freeze
 
@@ -13,6 +14,16 @@ module Interactors
 
       project = Project.find_by(id: params[:id], user_id: user.id)
       return Failure(Errors::NotFoundError.build(Project, params[:id])) unless project
+
+      table_name = project.data_id
+
+      yield create_table.call(
+        table_name:,
+        schema: dataframe.schema,
+        primary_key: :user_id
+      )
+
+      yield batch_insert.call(table_name:, dataframe:)
 
       project.update!(data_imported: true)
       Success()

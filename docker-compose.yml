@@ -4,6 +4,9 @@ services:
   scylla:
     image: scylladb/scylla:5.1.0
     restart: always
+    ports:
+    - "9042:9042"
+    - "10000:10000"
 
   postgres:
     image: postgres

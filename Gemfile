@@ -32,6 +32,7 @@ gem 'active_model_serializers'
 gem 'dry-auto_inject'
 gem 'dry-monads'
 gem 'dry-validation'
+gem 'dry-container'
 
 group :test, :development do
   gem 'awesome_print'
