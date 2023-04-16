@@ -67,16 +67,25 @@ class ProjectsController < ApplicationController
     else
       render_errors(result.failure)
     end
-
   end
 
-  private
+  params_for(:table) do
+    required(:id).filled(:str?)
+    optional(:filter).filled(:hash?)
+    optional(:sort).filled(:hash?)
 
-    def current_user
-      if Rails.env.development?
-        User.first
-      elsif doorkeeper_token
-        User.find(doorkeeper_token.resource_owner_id)
-      end
+    optional(:page).filled(:integer, gt?: 0)
+    optional(:limit).filled(:integer, gt?: 0)
+  end
+
+  def table
+    result = Interactors::FetchTable.new.call(params.to_h)
+
+    if result.success?
+      pagy, data, headers = pagy_dataframe(result.value!)
+      render json: { columns: headers, data:, metadata: pagy_metadata(pagy) }
+    else
+      render_errors(result.failure)
     end
+  end
 end

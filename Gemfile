@@ -34,6 +34,7 @@ gem 'dry-auto_inject'
 gem 'dry-monads'
 gem 'dry-validation'
 gem 'dry-container'
+gem 'pagy', '~> 6.0'
 
 group :test, :development do
   gem 'awesome_print'

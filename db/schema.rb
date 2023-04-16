@@ -10,104 +10,95 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_14_172236) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_16_004457) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'oauth_access_grants', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
-    t.uuid 'resource_owner_id', null: false
-    t.uuid 'application_id', null: false
-    t.text 'token', null: false
-    t.integer 'expires_in', null: false
-    t.text 'redirect_uri', null: false
-    t.text 'scopes', default: '', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'revoked_at'
-    t.text 'code_challenge'
-    t.text 'code_challenge_method'
-    t.index ['application_id'], name: 'index_oauth_access_grants_on_application_id'
-    t.index ['resource_owner_id'], name: 'index_oauth_access_grants_on_resource_owner_id'
-    t.index ['token'], name: 'index_oauth_access_grants_on_token', unique: true
+  create_table "oauth_access_grants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "resource_owner_id", null: false
+    t.uuid "application_id", null: false
+    t.text "token", null: false
+    t.integer "expires_in", null: false
+    t.text "redirect_uri", null: false
+    t.text "scopes", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "revoked_at"
+    t.text "code_challenge"
+    t.text "code_challenge_method"
+    t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
+    t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
   end
 
-  create_table 'oauth_access_tokens', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
-    t.uuid 'resource_owner_id'
-    t.uuid 'application_id', null: false
-    t.text 'token', null: false
-    t.text 'refresh_token'
-    t.integer 'expires_in'
-    t.text 'scopes'
-    t.datetime 'created_at', null: false
-    t.datetime 'revoked_at'
-    t.text 'previous_refresh_token', default: '', null: false
-    t.index ['application_id'], name: 'index_oauth_access_tokens_on_application_id'
-    t.index ['refresh_token'], name: 'index_oauth_access_tokens_on_refresh_token', unique: true
-    t.index ['resource_owner_id'], name: 'index_oauth_access_tokens_on_resource_owner_id'
-    t.index ['token'], name: 'index_oauth_access_tokens_on_token', unique: true
+  create_table "oauth_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "resource_owner_id"
+    t.uuid "application_id", null: false
+    t.text "token", null: false
+    t.text "refresh_token"
+    t.integer "expires_in"
+    t.text "scopes"
+    t.datetime "created_at", null: false
+    t.datetime "revoked_at"
+    t.text "previous_refresh_token", default: "", null: false
+    t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
+    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
+    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
   end
 
-  create_table 'oauth_applications', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
-    t.text 'name', null: false
-    t.text 'uid', null: false
-    t.text 'secret', null: false
-    t.text 'redirect_uri', null: false
-    t.text 'scopes', default: '', null: false
-    t.boolean 'confidential', default: true, null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['uid'], name: 'index_oauth_applications_on_uid', unique: true
+  create_table "oauth_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "name", null: false
+    t.text "uid", null: false
+    t.text "secret", null: false
+    t.text "redirect_uri", null: false
+    t.text "scopes", default: "", null: false
+    t.boolean "confidential", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
-  create_table 'oauth_openid_requests', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
-    t.uuid 'access_grant_id', null: false
-    t.string 'nonce', null: false
-    t.index ['access_grant_id'], name: 'index_oauth_openid_requests_on_access_grant_id'
+  create_table "oauth_openid_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "access_grant_id", null: false
+    t.string "nonce", null: false
+    t.index ["access_grant_id"], name: "index_oauth_openid_requests_on_access_grant_id"
   end
 
-  create_table 'projects', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
-    t.text 'name', null: false
-    t.text 'description'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.uuid 'user_id'
-    t.boolean 'data_imported', default: false, null: false
-    t.index ['user_id'], name: 'index_projects_on_user_id'
+  create_table "projects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id"
+    t.boolean "data_imported", default: false, null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
-  create_table 'sessions', force: :cascade do |t|
-    t.string 'session_id', null: false
-    t.text 'data'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['session_id'], name: 'index_sessions_on_session_id', unique: true
-    t.index ['updated_at'], name: 'index_sessions_on_updated_at'
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "email", null: false
+    t.text "encrypted_password"
+    t.text "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.text "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.text "unconfirmed_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "provider", null: false
+    t.text "name"
+    t.text "first_name"
+    t.text "last_name"
+    t.text "image"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table 'users', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
-    t.text 'email', null: false
-    t.text 'encrypted_password'
-    t.text 'reset_password_token'
-    t.datetime 'reset_password_sent_at'
-    t.datetime 'remember_created_at'
-    t.text 'confirmation_token'
-    t.datetime 'confirmed_at'
-    t.datetime 'confirmation_sent_at'
-    t.text 'unconfirmed_email'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.text 'provider', null: false
-    t.text 'name'
-    t.text 'first_name'
-    t.text 'last_name'
-    t.text 'image'
-    t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
-  end
-
-  add_foreign_key 'oauth_access_grants', 'oauth_applications', column: 'application_id'
-  add_foreign_key 'oauth_access_grants', 'users', column: 'resource_owner_id'
-  add_foreign_key 'oauth_access_tokens', 'oauth_applications', column: 'application_id'
-  add_foreign_key 'oauth_access_tokens', 'users', column: 'resource_owner_id'
-  add_foreign_key 'oauth_openid_requests', 'oauth_access_grants', column: 'access_grant_id', on_delete: :cascade
-  add_foreign_key 'projects', 'users'
+  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
+  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
+  add_foreign_key "oauth_openid_requests", "oauth_access_grants", column: "access_grant_id", on_delete: :cascade
+  add_foreign_key "projects", "users"
 end

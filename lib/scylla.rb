@@ -108,5 +108,36 @@ module Scylla
           )
         end
     end
+
+    class Select < Base
+
+      DEFAULT_LIMIT = 1000000
+
+      def call(table_name:)
+        data = StringIO.new(Rails.cache.read(table_name))
+        return Success(Polars.read_csv(data)) if data
+
+        query = build_query(table_name)
+
+        result = session.execute(query)
+        dataframe = Polars::DataFrame.new(result.to_a)
+
+        loop do
+          break if result.last_page?
+
+          result = result.next_page
+          dataframe = dataframe.vstack(Polars::DataFrame.new(result.to_a))
+        end
+
+        Rails.cache.write(table_name, dataframe.to_csv)
+        Success(dataframe)
+      end
+
+      private
+
+        def build_query(table_name)
+          "SELECT * FROM #{table_name}"
+        end
+    end
   end
 end

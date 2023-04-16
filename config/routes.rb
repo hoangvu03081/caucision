@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :projects do
     member do
       post :import, to: 'projects#import_data'
+      get :table
     end
   end
 end

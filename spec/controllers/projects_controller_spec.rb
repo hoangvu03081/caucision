@@ -59,7 +59,6 @@ RSpec.describe ProjectsController, type: :controller do
       let(:id) { project.id }
 
       before do
-
         allow(controller).to receive(:doorkeeper_token) { token }
       end
 

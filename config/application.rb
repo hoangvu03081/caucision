@@ -45,5 +45,9 @@ module Caucision
     config.session_store :active_record_store, key: '_user_session'
     config.middleware.use ActionDispatch::Cookies # Required for all session management
     config.middleware.use ActionDispatch::Session::CacheStore, config.session_options
+
+    config.after_initialize do
+      Scylla.session # Force connection at startup
+    end
   end
 end

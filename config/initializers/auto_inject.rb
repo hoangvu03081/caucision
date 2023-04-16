@@ -8,6 +8,10 @@ class DependencyInjectionContainer
   register('batch_insert') do
     Scylla::QueryHandlers::BatchInsert.new
   end
+
+  register('select') do
+    Scylla::QueryHandlers::Select.new
+  end
 end
 
 Dependency = Dry::AutoInject(DependencyInjectionContainer)
