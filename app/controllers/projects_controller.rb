@@ -57,6 +57,7 @@ class ProjectsController < ApplicationController
   params_for(:import_data) do
     required(:file).filled
     required(:id).filled(:str?)
+    required(:no_promotion_value).filled(:str?)
   end
 
   def import_data

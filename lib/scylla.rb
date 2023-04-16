@@ -114,8 +114,12 @@ module Scylla
       DEFAULT_LIMIT = 1000000
 
       def call(table_name:)
-        data = StringIO.new(Rails.cache.read(table_name))
-        return Success(Polars.read_csv(data)) if data
+        cached_data = Rails.cache.read(table_name)
+
+        if cached_data
+          buffer = StringIO.new(cached_data)
+          return Success(Polars.read_csv(buffer))
+        end
 
         query = build_query(table_name)
 
