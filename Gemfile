@@ -26,6 +26,7 @@ gem 'doorkeeper-openid_connect'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
+gem 'redis'
 
 # API Handling
 gem 'active_model_serializers'
