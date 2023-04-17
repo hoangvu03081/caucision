@@ -20,7 +20,7 @@ class ProjectsController < ApplicationController
     project = Project.find_by(id: params[:id], user_id: current_user.id)
 
     if project
-      render(json: project)
+      render(json: project, serializer: ProjectShowSerializer)
     else
       render_errors(Errors::NotFoundError.build(Project, params[:id]))
     end
@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
   params_for(:import_data) do
     required(:file).filled
     required(:id).filled(:str?)
-    required(:no_promotion_value).filled(:str?)
+    required(:control_promotion).filled(:str?)
   end
 
   def import_data

@@ -10,9 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_16_004457) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_17_000422) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "campaigns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "data_imported", default: false, null: false
+    t.uuid "project_id"
+    t.index ["project_id"], name: "index_campaigns_on_project_id"
+  end
 
   create_table "oauth_access_grants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "resource_owner_id", null: false
@@ -71,6 +77,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_16_004457) do
     t.datetime "updated_at", null: false
     t.uuid "user_id"
     t.boolean "data_imported", default: false, null: false
+    t.boolean "model_trained", default: false, null: false
+    t.text "control_promotion"
+    t.text "causal_graph"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 

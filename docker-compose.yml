@@ -27,6 +27,7 @@ services:
       - scylla
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/caucision_development
+      REDIS_URL: redis://redis:6379
     dns:
       - 8.8.8.8
       - 1.1.1.1

@@ -25,7 +25,7 @@ module Interactors
 
       yield batch_insert.call(table_name:, dataframe:)
 
-      project.update!(data_imported: true)
+      project.update!(data_imported: true, control_promotion: params[:control_promotion])
       Success()
     end
 
