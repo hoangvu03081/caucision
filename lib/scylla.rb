@@ -11,7 +11,7 @@ module Scylla
 
   # TODO: Better handling for checking existing keyspace
   def self.cluster
-    @cluster ||= Cassandra.cluster(host: HOSTS).tap do |cluster|
+    @cluster ||= Cassandra.cluster(hosts: HOSTS).tap do |cluster|
       session = cluster.connect('system')
       session.execute(KEYSPACE_DEFINITION)
     rescue Cassandra::Errors::AlreadyExistsError # rubocop:disable Lint/SuppressedException
