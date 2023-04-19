@@ -12,6 +12,8 @@ module Interactors
         return Failure(missing_fields_error(missing_columns))
       end
 
+      # TODO: Check if control_promotion is in promotion column values list
+
       project = Project.find_by(id: params[:id], user_id: user.id)
       return Failure(Errors::NotFoundError.build(Project, params[:id])) unless project
 
@@ -25,11 +27,29 @@ module Interactors
 
       yield batch_insert.call(table_name:, dataframe:)
 
-      project.update!(data_imported: true, control_promotion: params[:control_promotion])
+      data_schema = build_data_schema(dataframe)
+
+      project.update!(
+        data_imported: true,
+        control_promotion: params[:control_promotion],
+        data_schema:
+      )
+
       Success()
     end
 
     private
+
+      def build_data_schema(dataframe)
+        dataframe.schema.to_h do |column, type|
+          data_schema = {
+            type: Scylla::QueryHandlers::Base::TYPE_MAPPINGS[type],
+            unique_values: dataframe.n_unique(subset: [column])
+          }
+
+          [column, data_schema]
+        end
+      end
 
       def missing_fields_error(fields)
         Errors::InvalidParamsError.new(
