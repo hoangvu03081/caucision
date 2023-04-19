@@ -2,6 +2,10 @@ class ApplicationController < ActionController::API
   include ::ParameterValidation
   include Pagy::Backend
 
+  def authorize!
+    doorkeeper_authorize! if ENV['BYPASS_AUTHORIZATION'] != 'true'
+  end
+
   def render_errors(*errors, status: 400)
     render(json: { errors: errors.flatten.map(&:to_h) }, status:) # TOOD: Check if use serializer possible
   end

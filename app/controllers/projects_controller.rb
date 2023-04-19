@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :doorkeeper_authorize!
+  before_action :authorize!
 
   def index
     projects = Project.where(user_id: current_user.id)
