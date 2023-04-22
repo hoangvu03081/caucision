@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
   include Pagy::Backend
 
   def authorize!
-    doorkeeper_authorize! if ENV['BYPASS_AUTHORIZATION'] != 'true'
+    doorkeeper_authorize! if ENV['BYPASS_AUTH'] != 'true'
   end
 
   def render_errors(*errors, status: 400)

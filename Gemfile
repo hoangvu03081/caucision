@@ -31,9 +31,9 @@ gem 'redis'
 # API Handling
 gem 'active_model_serializers'
 gem 'dry-auto_inject'
+gem 'dry-container'
 gem 'dry-monads'
 gem 'dry-validation'
-gem 'dry-container'
 gem 'pagy', '~> 6.0'
 
 group :test, :development do

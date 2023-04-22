@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :projects do
     member do
       post :import, to: 'projects#import_data'
+      post :causal_graph, to: 'projects#import_causal_graph'
       get :table
     end
   end

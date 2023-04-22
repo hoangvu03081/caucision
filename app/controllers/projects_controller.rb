@@ -89,4 +89,19 @@ class ProjectsController < ApplicationController
       render_errors(result.failure)
     end
   end
+
+  params_for(:import_causal_graph) do
+    required(:id).filled(:str?)
+    required(:causal_graph).filled(:hash?)
+  end
+
+  def import_causal_graph
+    result = Interactors::ImportCausalGraph.new.call(params.to_h, current_user)
+
+    if result.success?
+      render :ok
+    else
+      render_errors(result.failure)
+    end
+  end
 end
