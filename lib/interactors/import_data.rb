@@ -35,7 +35,7 @@ module Interactors
         data_schema:
       )
 
-      Success()
+      Success(project)
     end
 
     private

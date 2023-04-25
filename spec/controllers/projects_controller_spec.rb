@@ -58,6 +58,27 @@ RSpec.describe ProjectsController, type: :controller do
       let(:file) { fixture_file_upload('sample_dataset.csv') }
       let(:project) { create(:project, user_id: user.id) }
       let(:id) { project.id }
+      let(:expected_response) do
+        {
+          data_imported: true,
+          model_trained: false,
+          control_promotion: 'No e-mail',
+          graph_imported: false,
+          data_schema: {
+            user_id: { type: 'int', unique_values: 64000 },
+            recency: { type: 'int', unique_values: 12 },
+            history_segment: { type: 'text', unique_values: 7 },
+            history: { type: 'float', unique_values: 34833 },
+            mens: { type: 'int', unique_values: 2 },
+            womens: { type: 'int', unique_values: 2 },
+            zip_code: { type: 'text', unique_values: 3 },
+            newbie: { type: 'int', unique_values: 2 },
+            channel: { type: 'text', unique_values: 3 },
+            promotion: { type: 'text', unique_values: 3 },
+            outcome: { type: 'int', unique_values: 6 }
+          }
+        }
+      end
 
       before do
         allow(controller).to receive(:doorkeeper_token) { token }
@@ -65,6 +86,10 @@ RSpec.describe ProjectsController, type: :controller do
 
       it 'updates project data_imported to true' do
         should have_http_status(200)
+
+        expect(
+          JSON.parse(subject.body, symbolize_names: true)
+        ).to match(a_hash_including(expected_response))
 
         expect(project.reload.data_imported).to be true
       end

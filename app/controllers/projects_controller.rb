@@ -64,7 +64,7 @@ class ProjectsController < ApplicationController
     result = Interactors::ImportData.new.call(params, current_user)
 
     if result.success?
-      render :ok
+      render(json: result.value!)
     else
       render_errors(result.failure)
     end
