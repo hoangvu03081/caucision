@@ -1,29 +1,45 @@
 module Polars
   module QueryExtension
-    def self.query(dataframe, filter_by: nil, sort_by: nil)
-      dataframe = filter(dataframe, filter_by:) if filter_by
-      dataframe = sort(dataframe, sort_by:) if sort_by
+    class << self
+      def query(dataframe, filter_by: nil, sort_by: nil)
+        dataframe = filter(dataframe, filter_by:) if filter_by
+        dataframe = sort(dataframe, sort_by:) if sort_by
 
-      dataframe
-    end
+        dataframe
+      end
 
-    def self.paginate(dataframe, offset:, limit:)
-      dataframe.slice(offset, limit)
-    end
+      # aggregate: [{ "column": "recency", "operation": "sum" }]
+      def aggregate(dataframe, group_by:, aggregate:)
+        aggregation_operations = aggregate.map do |agg|
+          Polars
+            .col(agg[:column])
+            .send(agg[:operation])
+            .suffix("_#{agg[:operation]}")
+        end
 
-    def self.filter(dataframe, filter_by:)
-      conditions =
-        filter_by
-          .map { |column_name, value| (Polars.col(column_name) == value) }
-          .reduce(:&)
+        dataframe
+          .groupby(Array.wrap(group_by))
+          .agg(aggregation_operations)
+      end
 
-      dataframe.filter(conditions)
-    end
+      def paginate(dataframe, offset:, limit:)
+        dataframe.slice(offset, limit)
+      end
 
-    def self.sort(dataframe, sort_by:)
-      reverse_list = sort_by.values.map { |order| order.downcase == 'desc' }
+      def filter(dataframe, filter_by:)
+        conditions =
+          filter_by
+            .map { |column_name, value| (Polars.col(column_name) == value) }
+            .reduce(:&)
 
-      dataframe.sort(sort_by.keys, reverse: reverse_list)
+        dataframe.filter(conditions)
+      end
+
+      def sort(dataframe, sort_by:)
+        reverse_list = sort_by.values.map { |order| order.downcase == 'desc' }
+
+        dataframe.sort(sort_by.keys, reverse: reverse_list)
+      end
     end
   end
 end

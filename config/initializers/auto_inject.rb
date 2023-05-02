@@ -12,6 +12,10 @@ class DependencyInjectionContainer
   register('select') do
     Scylla::QueryHandlers::Select.new
   end
+
+  register('fetch_table') do
+    Interactors::FetchTable.new
+  end
 end
 
 Dependency = Dry::AutoInject(DependencyInjectionContainer)
