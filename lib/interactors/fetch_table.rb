@@ -3,6 +3,7 @@ module Interactors
     include Dependency['select']
 
     def call(params)
+      # TODO: Add user_id for this find_by
       project = Project.find_by(id: params[:id])
       return Failure(Errors::NotFoundError.build(Project, params[:id])) unless project
 

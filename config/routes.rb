@@ -20,5 +20,7 @@ Rails.application.routes.draw do
       get :table
       get :graph, to: 'projects#query_graph'
     end
+
+    resources :graphs, shallow: true
   end
 end
