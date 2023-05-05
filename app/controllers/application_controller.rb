@@ -19,7 +19,12 @@ class ApplicationController < ActionController::API
   end
 
   def pagy_dataframe(dataframe, vars = {})
-    pagy = Pagy.new(count: dataframe.length, page: params[:page], **vars)
+    pagy = Pagy.new(
+      count: dataframe.length,
+      page: params[:page],
+      items: params[:limit],
+      **vars
+    )
 
     headers = dataframe.columns
 
