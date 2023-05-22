@@ -10,6 +10,7 @@ gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 gem 'dotenv-rails'
 
 gem 'http'
+gem 'bunny'
 
 # ScyllaDB
 gem 'cassandra-driver'

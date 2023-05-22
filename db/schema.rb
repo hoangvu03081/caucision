@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_04_163657) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_21_233257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_163657) do
     t.text "causal_graph"
     t.jsonb "data_schema", default: {}, null: false
     t.text "graph_order", default: [], array: true
+    t.text "promotions", default: [], array: true
+    t.binary "model"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 

@@ -187,6 +187,7 @@ RSpec.describe ProjectsController, type: :controller do
           'promotion' => ['outcome']
         }
       end
+      let(:expected_graph) { 'digraph {channel -> outcome; history -> outcome; history_segment -> outcome; mens -> outcome; newbie -> outcome; promotion -> outcome; recency -> outcome; segment -> outcome; womens -> outcome; zip_code -> outcome; outcome -> conversion; conversion}' }
 
       before do
         allow(controller).to receive(:doorkeeper_token) { token }
@@ -195,7 +196,8 @@ RSpec.describe ProjectsController, type: :controller do
       it 'updates project data_imported to true' do
         should have_http_status(200)
 
-        expect(project.reload.data_imported).to be true
+        expect(project.reload.causal_graph_imported?).to be true
+        expect(project.causal_graph).to eq(expected_graph)
       end
     end
   end

@@ -32,7 +32,8 @@ module Interactors
       project.update!(
         data_imported: true,
         control_promotion: params[:control_promotion],
-        data_schema:
+        data_schema:,
+        promotions: dataframe['promotion'].unique.to_a
       )
 
       Success(project)

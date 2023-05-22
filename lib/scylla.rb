@@ -25,6 +25,7 @@ module Scylla
   module QueryHandlers
     class Base < BaseInteractor
 
+      # TODO: Add more types here (e.g. boolean)
       TYPE_MAPPINGS = {
         Polars::Int64 => 'int',
         Polars::Float64 => 'float',

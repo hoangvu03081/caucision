@@ -8,6 +8,10 @@ module Interactors
 
       schema = project.data_schema
       causal_graph = params[:causal_graph].stringify_keys
+      causal_graph = causal_graph.merge({
+        'outcome' => ['conversion'],
+        'conversion' => []
+      })
 
       required_columns = schema.except('user_id').keys
       missing_columns = required_columns - causal_graph.keys
