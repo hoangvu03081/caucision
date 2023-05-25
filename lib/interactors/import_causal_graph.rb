@@ -1,5 +1,7 @@
 module Interactors
   class ImportCausalGraph < BaseInteractor
+    include Dependency['message_queue']
+
     def call(params, user)
       project = Project.find_by(id: params[:id], user_id: user.id)
 
@@ -25,6 +27,10 @@ module Interactors
       serialized_graph = serialize_graph(causal_graph)
 
       project.update!(causal_graph: serialized_graph)
+
+      message_queue.direct_publish(
+        Constants::Queue::DATA_IMPORTED, { project_id: project.id }
+      )
 
       Success()
     end

@@ -16,6 +16,10 @@ class DependencyInjectionContainer
   register('fetch_table') do
     Interactors::FetchTable.new
   end
+
+  register('message_queue') do
+    MessageQueue.new
+  end
 end
 
 Dependency = Dry::AutoInject(DependencyInjectionContainer)
