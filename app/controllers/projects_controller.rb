@@ -107,7 +107,6 @@ class ProjectsController < ApplicationController
 
   params_for(:query_graph) do
     required(:id).filled(:str?)
-    required(:title).filled(:str?)
     required(:type).filled(:str?, included_in?: Interactors::QueryGraph::GRAPH_BUILDER_MAPPINGS.keys)
     required(:query_details).filled(:hash?)
   end

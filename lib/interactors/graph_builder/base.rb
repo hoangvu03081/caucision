@@ -5,7 +5,7 @@ module Interactors
       def call(params, dataframe)
         validated_query_details = yield validate(params)
         graph = build_graph(validated_query_details, dataframe)
-        Success(graph.deep_merge(default_options(params)))
+        Success(graph)
       end
 
       private
@@ -31,12 +31,6 @@ module Interactors
 
         def build_graph(query_details, dataframe)
           raise NotImplementedError
-        end
-
-        def default_options(params)
-          {
-            options: { title: params[:title] }
-          }
         end
     end
   end

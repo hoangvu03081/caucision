@@ -25,14 +25,17 @@ module Polars
       # aggregate: [{ "column": "recency", "operation": "sum" }]
       def aggregate(dataframe, group_by:, aggregate:)
         aggregation_operations = aggregate.map do |agg|
-          Polars
-            .col(agg[:column])
-            .send(agg[:operation])
-            .suffix("_#{agg[:operation]}")
+          col = Polars.col(agg[:column])
+
+          if agg[:operation]
+            col = col.send(agg[:operation]).suffix("_#{agg[:operation]}")
+          end
+
+          col
         end
 
         dataframe
-          .groupby(Array.wrap(group_by))
+          .groupby(Array.wrap(group_by), maintain_order: true)
           .agg(aggregation_operations)
       end
 
