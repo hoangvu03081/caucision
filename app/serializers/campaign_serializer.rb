@@ -1,3 +1,3 @@
 class CampaignSerializer < ActiveModel::Serializer
-  attributes :id, :data_imported, :project_id
+  attributes :id, :name, :data_imported, :project_id
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_21_233257) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_28_024622) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +20,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_233257) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "graph_order", default: [], array: true
+    t.text "name"
+    t.boolean "default", default: false, null: false
+    t.uuid "user_id"
+    t.index ["name"], name: "index_campaigns_on_name"
     t.index ["project_id"], name: "index_campaigns_on_project_id"
+    t.index ["user_id"], name: "index_campaigns_on_user_id"
   end
 
   create_table "graphs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -97,6 +102,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_233257) do
     t.text "graph_order", default: [], array: true
     t.text "promotions", default: [], array: true
     t.binary "model"
+    t.index ["description"], name: "index_projects_on_description"
+    t.index ["name"], name: "index_projects_on_name"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -121,6 +128,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_233257) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "campaigns", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
