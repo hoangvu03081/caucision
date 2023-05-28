@@ -56,7 +56,7 @@ services:
       - message-queue:/var/lib/rabbitmq
 
   caucision-ml-celery:
-    image: hoangvu03081/caucision-ml-celery
+    image: hoangvu03081/caucision-ml-celery:0.3
     restart: always
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/caucision_development
