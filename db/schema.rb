@@ -10,8 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_28_035315) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_07_003105) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "campaigns", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -20,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_28_035315) do
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.text "graph_order", default: [], array: true
-    t.text "name"
+    t.text "name", null: false
     t.boolean "default", default: false, null: false
     t.uuid "user_id"
     t.index ["name"], name: "index_campaigns_on_name"
@@ -86,6 +88,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_28_035315) do
     t.uuid "access_grant_id", null: false
     t.string "nonce", null: false
     t.index ["access_grant_id"], name: "index_oauth_openid_requests_on_access_grant_id"
+  end
+
+  create_table "pg_search_documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "content"
+    t.string "searchable_type"
+    t.uuid "searchable_id"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable"
+    t.index ["user_id"], name: "index_pg_search_documents_on_user_id"
   end
 
   create_table "projects", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

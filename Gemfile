@@ -9,8 +9,8 @@ gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 
 gem 'dotenv-rails'
 
-gem 'http'
 gem 'bunny'
+gem 'http'
 
 # ScyllaDB
 gem 'cassandra-driver'
@@ -36,6 +36,7 @@ gem 'dry-container'
 gem 'dry-monads'
 gem 'dry-validation'
 gem 'pagy', '~> 6.0'
+gem 'pg_search'
 
 group :test, :development do
   gem 'awesome_print'

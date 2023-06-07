@@ -187,7 +187,8 @@ RSpec.describe ProjectsController, type: :controller do
           'promotion' => ['outcome']
         }
       end
-      let(:expected_graph) { 'digraph {channel -> outcome; history -> outcome; history_segment -> outcome; mens -> outcome; newbie -> outcome; promotion -> outcome; recency -> outcome; segment -> outcome; womens -> outcome; zip_code -> outcome; outcome -> conversion; conversion}' }
+      let(:expected_graph) {
+ 'digraph {channel -> outcome; history -> outcome; history_segment -> outcome; mens -> outcome; newbie -> outcome; promotion -> outcome; recency -> outcome; segment -> outcome; womens -> outcome; zip_code -> outcome; outcome -> conversion; conversion}' }
 
       before do
         allow(controller).to receive(:doorkeeper_token) { token }

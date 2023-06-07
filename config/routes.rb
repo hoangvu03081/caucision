@@ -18,4 +18,6 @@ Rails.application.routes.draw do
     resources :graphs, shallow: true
     resources :campaigns, shallow: true
   end
+
+  get :search, to: 'search#index'
 end
