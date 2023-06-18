@@ -7,6 +7,7 @@ module Interactors
 
       return Failure(Errors::NotFoundError.build(Project, params[:id])) unless project
       return Failure(data_not_imported_error) unless project.data_imported?
+      return Failure(causal_graph_already_imported) if project.causal_graph.present?
 
       schema = project.data_schema
       causal_graph = params[:causal_graph].stringify_keys
@@ -59,6 +60,10 @@ module Interactors
 
       def data_not_imported_error
         Errors::InvalidParamsError.new('Project data has not been imported before')
+      end
+
+      def causal_graph_already_imported
+        Errors::InvalidParamsError.new('Causal graph has already been imported')
       end
 
       def missing_fields_error(fields)
