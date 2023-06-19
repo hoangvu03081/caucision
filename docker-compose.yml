@@ -32,6 +32,7 @@ services:
       REDIS_URL: redis://redis:6379
       SCYLLA_HOST: scylla
       RABBIT_MQ_HOST: rabbitmq
+      CAUCISION_ML_URL: http://caucision-ml:8000
     dns:
       - 8.8.8.8
       - 1.1.1.1
@@ -55,8 +56,21 @@ services:
     volumes:
       - message-queue:/var/lib/rabbitmq
 
+  caucision-ml:
+    image: hoangvu03081/caucision-ml:0.4
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/caucision_development
+      SCYLLA_HOST: scylla
+      REDIS_URL: redis://redis:6379
+      CELERY_BROKER_URL: pyamqp://guest:guest@rabbitmq
+    depends_on:
+      - postgres
+      - scylla
+      - rabbitmq
+
   caucision-ml-celery:
-    image: hoangvu03081/caucision-ml-celery:0.3
+    image: hoangvu03081/caucision-ml-celery:0.4
     restart: always
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/caucision_development

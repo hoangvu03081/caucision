@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
   end
 
   def import_data
-    result = Interactors::ImportData.new.call(params, current_user)
+    result = Interactors::ImportProjectData.new.call(params, current_user)
 
     if result.success?
       render(json: result.value!, serializer: ProjectShowSerializer)

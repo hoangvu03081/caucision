@@ -59,4 +59,27 @@ class CampaignsController < ApplicationController
       render_errors(Errors::NotFoundError.build(Campaign, params[:id]))
     end
   end
+
+  params_for(:import_data) do
+    required(:file).filled
+    required(:id).filled(:str?)
+  end
+
+  def import_data
+    result = Interactors::ImportCampaignData.new.call(params, current_user)
+
+    if result.success?
+      render(json: result.value!)
+    else
+      render_errors(result.failure)
+    end
+  end
+
+  def table
+    render(status: 200)
+  end
+
+  def query_graph
+    render(status: 200)
+  end
 end

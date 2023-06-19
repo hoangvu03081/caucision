@@ -1,5 +1,5 @@
 module Interactors
-  class ImportData < BaseInteractor
+  class ImportProjectData < BaseInteractor
     include ::Dependency['create_table', 'batch_insert']
 
     REQUIRED_COLUMNS = %w(promotion outcome user_id).freeze

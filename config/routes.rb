@@ -16,7 +16,15 @@ Rails.application.routes.draw do
     end
 
     resources :graphs, shallow: true
-    resources :campaigns, shallow: true
+    resources :campaigns, only: [:index, :new, :create]
+  end
+
+  resources :campaigns, only: [:show, :update, :destroy] do
+    member do
+      post :import, to: 'campaigns#import_data'
+      get :table
+      get :graph, to: 'campaigns#query_graph'
+    end
   end
 
   get :search, to: 'search#index'

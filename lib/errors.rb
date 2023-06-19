@@ -49,4 +49,9 @@ module Errors
     code 'CA1003'
     default_message 'Data has already been imported before'
   end
+
+  class InternalError < BaseError
+    code 'CA1004'
+    default_message 'Internal error'
+  end
 end
