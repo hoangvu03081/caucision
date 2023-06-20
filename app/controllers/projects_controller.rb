@@ -80,7 +80,9 @@ class ProjectsController < ApplicationController
   end
 
   def table
-    result = Interactors::FetchTable.new.call(params.to_h)
+    result = Interactors::FetchTable.new.call(
+      params.to_h, current_user, from: :project
+    )
 
     if result.success?
       pagy, data, headers = pagy_dataframe(result.value!)

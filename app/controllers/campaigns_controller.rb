@@ -75,8 +75,26 @@ class CampaignsController < ApplicationController
     end
   end
 
+  params_for(:table) do
+    required(:id).filled(:str?)
+    optional(:filter).filled(:hash?)
+    optional(:sort).filled(:hash?)
+
+    optional(:page).filled(:integer, gt?: 0)
+    optional(:limit).filled(:integer, gt?: 0)
+  end
+
   def table
-    render(status: 200)
+    result = Interactors::FetchTable.new.call(
+      params.to_h, current_user, from: :campaign
+    )
+
+    if result.success?
+      pagy, data, headers = pagy_dataframe(result.value!)
+      render json: { columns: headers, data:, metadata: pagy_metadata(pagy) }
+    else
+      render_errors(result.failure)
+    end
   end
 
   def query_graph
