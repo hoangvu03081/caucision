@@ -2,7 +2,8 @@ class GraphsController < ApplicationController
   before_action :authorize!
 
   params_for(:index) do
-    required(:project_id).filled(:str?) # TODO: Update to uuid v4
+    optional(:project_id).filled(:str?) # TODO: Update to uuid v4
+    optional(:campaign_id).filled(:str?) # TODO: Update to uuid v4
   end
 
   def index
@@ -16,7 +17,8 @@ class GraphsController < ApplicationController
   end
 
   params_for(:create) do
-    required(:project_id).filled(:str?) # TODO: Update to uuid v4
+    optional(:project_id).filled(:str?) # TODO: Update to uuid v4
+    optional(:campaign_id).filled(:str?) # TODO: Update to uuid v4
     required(:data).filled(:hash?)
   end
 

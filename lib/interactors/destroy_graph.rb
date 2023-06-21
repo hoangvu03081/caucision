@@ -5,11 +5,11 @@ module Interactors
       graph = Graph.find_by(id: params[:id])
       return Failure(Errors::NotFoundError.build(Graph, params[:id])) unless graph
 
-      project = graph.project
+      record = graph.owner
       graph.destroy!
 
-      new_graph_order = project.graph_order.tap { |order| order.delete(graph.id) }
-      project.update!(graph_order: new_graph_order)
+      new_graph_order = record.graph_order.tap { |order| order.delete(graph.id) }
+      record.update!(graph_order: new_graph_order)
 
       Success()
     end

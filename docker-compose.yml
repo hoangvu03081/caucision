@@ -57,26 +57,28 @@ services:
       - message-queue:/var/lib/rabbitmq
 
   caucision-ml:
-    image: hoangvu03081/caucision-ml:0.4
+    image: hoangvu03081/caucision-ml:0.5
     restart: always
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/caucision_development
       SCYLLA_HOST: scylla
       REDIS_URL: redis://redis:6379
       CELERY_BROKER_URL: pyamqp://guest:guest@rabbitmq
+      API_GATEWAY_URL: http://api-gateway:2300
     depends_on:
       - postgres
       - scylla
       - rabbitmq
 
   caucision-ml-celery:
-    image: hoangvu03081/caucision-ml-celery:0.4
+    image: hoangvu03081/caucision-ml-celery:0.5
     restart: always
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/caucision_development
       SCYLLA_HOST: scylla
       REDIS_URL: redis://redis:6379
       CELERY_BROKER_URL: pyamqp://guest:guest@rabbitmq
+      API_GATEWAY_URL: http://api-gateway:2300
     depends_on:
       - postgres
       - scylla

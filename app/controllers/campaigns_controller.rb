@@ -97,7 +97,19 @@ class CampaignsController < ApplicationController
     end
   end
 
+  params_for(:query_graph) do
+    required(:id).filled(:str?)
+    required(:type).filled(:str?, included_in?: Interactors::QueryGraph::GRAPH_BUILDER_MAPPINGS.keys)
+    required(:query_details).filled(:hash?)
+  end
+
   def query_graph
-    render(status: 200)
+    result = Interactors::QueryGraph.new.call(params.to_h, current_user, :campaign)
+
+    if result.success?
+      render(json: result.value!)
+    else
+      render_errors(result.failure)
+    end
   end
 end

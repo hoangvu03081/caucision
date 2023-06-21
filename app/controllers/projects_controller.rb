@@ -114,7 +114,7 @@ class ProjectsController < ApplicationController
   end
 
   def query_graph
-    result = Interactors::QueryGraph.new.call(params.to_h)
+    result = Interactors::QueryGraph.new.call(params.to_h, current_user, :project)
 
     if result.success?
       render(json: result.value!)

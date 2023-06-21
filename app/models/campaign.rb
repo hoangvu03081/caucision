@@ -1,6 +1,7 @@
 class Campaign < ApplicationRecord
   include PgSearch::Model
 
+  belongs_to :user
   belongs_to :project
   has_many :graphs
 
@@ -9,5 +10,11 @@ class Campaign < ApplicationRecord
 
   def data_id
     "c_#{id.underscore}_data"
+  end
+
+  def ordered_graphs
+    graphs.sort_by do |graph|
+      graph_order.index(graph.id)
+    end
   end
 end

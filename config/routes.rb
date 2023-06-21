@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       get :graph, to: 'projects#query_graph'
     end
 
-    resources :graphs, shallow: true
+    resources :graphs, only: [:index, :new, :create]
     resources :campaigns, only: [:index, :new, :create]
   end
 
@@ -25,7 +25,13 @@ Rails.application.routes.draw do
       get :table
       get :graph, to: 'campaigns#query_graph'
     end
+
+    resources :graphs, only: [:index, :new, :create]
   end
 
+  resources :graphs, only: [:show, :update, :destroy]
+
   get :search, to: 'search#index'
+
+  post '/internal/default_campaign', to: 'internal#create_default_campaign'
 end

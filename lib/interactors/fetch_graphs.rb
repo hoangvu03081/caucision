@@ -1,10 +1,19 @@
 module Interactors
   class FetchGraphs < BaseInteractor
     def call(params, user)
-      project = Project.find_by(id: params[:project_id], user_id: user.id)
-      return Failure(Errors::NotFoundError.build(Project, params[:project_id])) unless project
+      id, model =
+        if params[:project_id]
+          [params[:project_id], Project]
+        elsif params[:campaign_id]
+          [params[:campaign_id], Campaign]
+        else
+          raise Errors::InternalError, 'Routing for fetching graph is incorrect'
+        end
 
-      Success(project.ordered_graphs)
+      record = model.find_by(id:, user_id: user.id)
+      return Failure(Errors::NotFoundError.build(model, id)) unless project
+
+      Success(record.ordered_graphs)
     end
   end
 end

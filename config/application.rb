@@ -45,5 +45,7 @@ module Caucision
     config.session_store :active_record_store, key: '_user_session'
     config.middleware.use ActionDispatch::Cookies # Required for all session management
     config.middleware.use ActionDispatch::Session::CacheStore, config.session_options
+    config.hosts << /[a-z0-9]+/
+    config.host_authorization = { exclude: ->(request) { request.path =~ /.*/ } }
   end
 end

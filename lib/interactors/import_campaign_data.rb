@@ -2,6 +2,7 @@ module Interactors
   class ImportCampaignData < BaseInteractor
     BLACKLISTED_COLUMNS = %w(promotion outcome).freeze
 
+    # rubocop:disable Metrics/AbcSize
     def call(params, user)
       campaign = Campaign.find_by(id: params[:id], user_id: user.id)
       return Failure(Errors::NotFoundError.build(Campaign, params[:id])) unless campaign
@@ -27,12 +28,18 @@ module Interactors
       # TODO: Add proper error handling here
       return Failure(Errors::InternalError.new) unless response.status.success?
 
-      Rails.cache.write(campaign.data_id, response.body.to_s)
+      response_body = response.body.to_s
+      buffer = StringIO.new(response_body)
+      inferred_dataframe = Polars.read_csv(buffer)
 
-      campaign.update!(data_imported: true)
+      data_schema = build_data_schema(inferred_dataframe)
+      campaign.update!(data_imported: true, data_schema:)
+
+      Rails.cache.write(campaign.data_id, response_body)
 
       Success(campaign)
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 
