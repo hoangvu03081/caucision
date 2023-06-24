@@ -11,7 +11,7 @@ module Interactors
         end
 
       record = model.find_by(id:, user_id: user.id)
-      return Failure(Errors::NotFoundError.build(model, id)) unless project
+      return Failure(Errors::NotFoundError.build(model, id)) unless record
 
       Success(record.ordered_graphs)
     end
