@@ -11,7 +11,7 @@ module Interactors
         end
 
       record = model.find_by(id:, user_id: user.id)
-      return Failure(Errors::NotFoundError.build(model, id)) unless project
+      return Failure(Errors::NotFoundError.build(model, id)) unless record
 
       # TODO: Add transaction here
       graph = Graph.create!(project_id: params[:project_id], data: params[:data])
