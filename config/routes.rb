@@ -35,4 +35,5 @@ Rails.application.routes.draw do
   get :search, to: 'search#index'
 
   post '/internal/default_campaign', to: 'internal#create_default_campaign'
+  post '/users/complete_tour_guide', to: 'users#complete_tour_guide'
 end

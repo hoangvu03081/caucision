@@ -66,6 +66,10 @@ Doorkeeper::OpenidConnect.configure do
     claim :image, response: [:id_token, :user_info] do |resource_owner|
       resource_owner.image
     end
+
+    claim :tour_guide_completed, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.tour_guide_completed
+    end
   end
   # Example claims:
   # claims do
