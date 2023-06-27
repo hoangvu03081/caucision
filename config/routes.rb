@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', sessions: 'users/sessions' }
 
+  get 'project_sample_dataset', to: 'projects#sample_dataset'
   resources :projects do
     member do
       post :import, to: 'projects#import_data'

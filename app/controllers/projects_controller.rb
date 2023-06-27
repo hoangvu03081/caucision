@@ -122,4 +122,10 @@ class ProjectsController < ApplicationController
       render_errors(result.failure)
     end
   end
+
+  def sample_dataset
+    send_file Rails.root.join('spec', 'fixtures', 'files', 'sample_dataset.csv'),
+              type: 'text/csv; charset=utf-8; header=present',
+              disposition: 'attachment; filename=sample_dataset.csv'
+  end
 end
