@@ -6,13 +6,24 @@ class InternalController < ApplicationController
   end
 
   def create_default_campaign
-    Campaign.create!(
+    campaign = Campaign.create!(
       id: params[:project_id],
       user_id: params[:user_id],
       project_id: params[:project_id],
       data_imported: true,
       name: 'Default campaign',
       data_schema: params[:data_schema]
+    )
+
+    notification = Notification.model_training_completed(
+      project_name: campaign.project.name,
+      project_id: params[:project_id],
+      user_id: params[:user_id]
+    )
+
+    NotificationChannel.broadcast_to(
+      params[:user_id],
+      notification
     )
 
     render(status: 201)

@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :authorize!
 
   def index
-    projects = Project.where(user_id: current_user.id)
+    projects = Project.where(user_id: current_user.id).order(:created_at)
     render(json: projects)
   end
 

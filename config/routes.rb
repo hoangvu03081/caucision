@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
   resources :graphs, only: [:show, :update, :destroy]
 
+  resources :notifications, only: [:index, :update]
+
   get :search, to: 'search#index'
 
   post '/internal/default_campaign', to: 'internal#create_default_campaign'

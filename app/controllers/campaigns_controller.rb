@@ -8,7 +8,7 @@ class CampaignsController < ApplicationController
   def index
     campaigns = Campaign.where(
       user_id: current_user.id, project_id: params[:project_id]
-    )
+    ).order(:created_at)
 
     render(json: campaigns)
   end

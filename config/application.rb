@@ -47,5 +47,6 @@ module Caucision
     config.middleware.use ActionDispatch::Session::CacheStore, config.session_options
     config.hosts << /[a-z0-9]+/
     config.host_authorization = { exclude: ->(request) { request.path =~ /.*/ } }
+    config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/, /file:\/\/*/, 'file://', nil]
   end
 end
