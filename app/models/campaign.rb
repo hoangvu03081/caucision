@@ -17,4 +17,8 @@ class Campaign < ApplicationRecord
       graph_order.index(graph.id)
     end
   end
+
+  def optimized?
+    optimization_result.present?
+  end
 end

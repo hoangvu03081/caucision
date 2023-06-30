@@ -24,13 +24,8 @@ class CampaignsController < ApplicationController
   end
 
   def show
-    campaign = Campaign.find_by(id: params[:id], user_id: current_user.id)
-
-    if campaign
-      render(json: campaign)
-    else
-      render_errors(Errors::NotFoundError.build(Campaign, params[:id]))
-    end
+    campaign = fetch_campaign!
+    render(json: campaign)
   end
 
   params_for(:update) do
@@ -112,4 +107,69 @@ class CampaignsController < ApplicationController
       render_errors(result.failure)
     end
   end
+
+  def delete_optimization
+    campaign = fetch_campaign!
+    campaign.update!(optimization_result: nil)
+    render(status: 200)
+  end
+
+  params_for(:fetch_optimization_table) do
+    required(:id).filled(:str?)
+    optional(:filter).filled(:hash?)
+    optional(:sort).filled(:hash?)
+
+    optional(:page).filled(:integer, gt?: 0)
+    optional(:limit).filled(:integer, gt?: 0)
+  end
+
+  def fetch_optimization_table
+    result = Interactors::FetchOptimizationTable.new.call(params, current_user)
+
+    if result.success?
+      pagy, data, headers = pagy_dataframe(result.value!)
+      render json: { columns: headers, data:, metadata: pagy_metadata(pagy) }
+    else
+      render_errors(result.failure)
+    end
+  end
+
+  def download_optimization_result
+    result = Interactors::FetchOptimizationTable.new.call(params, current_user)
+
+    if result.success?
+      send_file result.value!,
+                type: 'text/csv; charset=utf-8; header=present',
+                disposition: 'attachment; filename=optimization_result.csv'
+    else
+      render_errors(result.failure)
+    end
+  end
+
+  params_for(:create_optimization) do
+    required(:id).filled(:str?)
+    required(:budget).filled(:float?)
+    optional(:file).filled
+    optional(:promotion_costs).filled(:hash?)
+  end
+
+  def create_optimization
+    result = Interactors::CreateOptimization.new.call(params, current_user)
+
+    if result.success?
+      render(status: 201)
+    else
+      render_errors(result.failure)
+    end
+  end
+
+  private
+
+    def fetch_campaign!
+      campaign = Campaign.find_by(id: params[:id], user_id: current_user.id)
+
+      render_errors(Errors::NotFoundError.build(Campaign, params[:id])) unless campaign
+
+      campaign
+    end
 end

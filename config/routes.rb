@@ -25,6 +25,11 @@ Rails.application.routes.draw do
       post :import, to: 'campaigns#import_data'
       get :table
       get :graph, to: 'campaigns#query_graph'
+
+      delete :optimization, to: 'campaigns#delete_optimization'
+      get :optimization_table, to: 'campaigns#fetch_optimization_table'
+      get :optimization_result, to: 'campaigns#download_optimization_result'
+      post :optimization, to: 'campaigns#create_optimization'
     end
 
     resources :graphs, only: [:index, :new, :create]
