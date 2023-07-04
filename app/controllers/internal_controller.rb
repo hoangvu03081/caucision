@@ -18,7 +18,8 @@ class InternalController < ApplicationController
     notification = Notification.model_training_completed(
       project_name: campaign.project.name,
       project_id: params[:project_id],
-      user_id: params[:user_id]
+      user_id: params[:user_id],
+      campaign_id: campaign.id
     )
 
     NotificationChannel.broadcast_to(
