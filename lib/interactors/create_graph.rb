@@ -14,7 +14,7 @@ module Interactors
       return Failure(Errors::NotFoundError.build(model, id)) unless record
 
       # TODO: Add transaction here
-      graph = Graph.create!(project_id: params[:project_id], data: params[:data])
+      graph = Graph.create!(**params)
       record.update!(graph_order: record.graph_order.append(graph.id))
 
       Success(graph)
