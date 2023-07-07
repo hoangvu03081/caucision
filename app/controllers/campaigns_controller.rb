@@ -138,7 +138,10 @@ class CampaignsController < ApplicationController
     result = Interactors::FetchOptimizationTable.new.call(params, current_user)
 
     if result.success?
-      send_file result.value!,
+      file = Tempfile.new(['optimization-result-', '.csv'])
+      result.value!.write_csv(file)
+
+      send_file file,
                 type: 'text/csv; charset=utf-8; header=present',
                 disposition: 'attachment; filename=optimization_result.csv'
     else
