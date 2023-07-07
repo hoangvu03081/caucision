@@ -66,6 +66,12 @@ module Polars
 
         dataframe.sort(sort_by.keys, reverse: reverse_list)
       end
+
+      def round(dataframe, columns:, precision:)
+        columns.reduce(dataframe) do |df, column|
+          df.with_column(Polars.col(column).round(precision))
+        end
+      end
     end
   end
 end

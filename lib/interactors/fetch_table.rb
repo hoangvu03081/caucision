@@ -23,7 +23,15 @@ module Interactors
 
       predicted_columns = infer_predicted_columns(record) if model == Campaign
 
-      Success([filtered_dataframe, predicted_columns])
+      if predicted_columns
+        filtered_dataframe = Polars::QueryExtension.round(
+          filtered_dataframe,
+          columns: predicted_columns,
+          precision: 3
+        )
+      end
+
+      Success([filtered_dataframe, { predicted_columns: }])
     end
 
     private
@@ -35,11 +43,9 @@ module Interactors
           promotion == project.control_promotion
         end
 
-        predicted_columns = promotions.reduce([]) do |result, promotion|
+        promotions.reduce([]) do |result, promotion|
           result + ["#{promotion} conversion", "#{promotion} outcome"]
         end
-
-        { predicted_columns: }
       end
   end
 end
