@@ -85,8 +85,16 @@ class CampaignsController < ApplicationController
     )
 
     if result.success?
-      pagy, data, headers = pagy_dataframe(result.value!)
-      render json: { columns: headers, data:, metadata: pagy_metadata(pagy) }
+      dataframe, predicted_metadata = result.value!
+
+      pagy, data, headers = pagy_dataframe(dataframe)
+
+      render json: {
+               columns: headers,
+               data:,
+               metadata: pagy_metadata(pagy),
+               **predicted_metadata
+             }
     else
       render_errors(result.failure)
     end

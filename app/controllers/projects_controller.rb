@@ -85,7 +85,9 @@ class ProjectsController < ApplicationController
     )
 
     if result.success?
-      pagy, data, headers = pagy_dataframe(result.value!)
+      dataframe, _metadata = result.value!
+
+      pagy, data, headers = pagy_dataframe(dataframe)
       render json: { columns: headers, data:, metadata: pagy_metadata(pagy) }
     else
       render_errors(result.failure)

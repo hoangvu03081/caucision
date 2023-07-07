@@ -21,7 +21,25 @@ module Interactors
         sort_by: params[:sort]
       )
 
-      Success(filtered_dataframe)
+      predicted_columns = infer_predicted_columns(record) if model == Campaign
+
+      Success([filtered_dataframe, predicted_columns])
     end
+
+    private
+
+      def infer_predicted_columns(record)
+        project = record.project
+
+        promotions = project.promotions.reject do |promotion|
+          promotion == project.control_promotion
+        end
+
+        predicted_columns = promotions.reduce([]) do |result, promotion|
+          result + ["#{promotion} conversion", "#{promotion} outcome"]
+        end
+
+        { predicted_columns: }
+      end
   end
 end
