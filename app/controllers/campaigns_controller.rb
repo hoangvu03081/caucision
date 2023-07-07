@@ -159,7 +159,7 @@ class CampaignsController < ApplicationController
 
   params_for(:create_optimization) do
     required(:id).filled(:str?)
-    required(:budget).filled(:float?)
+    required(:budget).filled(:float)
     optional(:file).filled
     optional(:promotion_costs).filled(:hash?)
   end
