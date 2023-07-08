@@ -12,7 +12,8 @@ module Interactors
     }.freeze
 
     def call(params, user, type)
-      dataframe = yield fetch_table.call(params, user, from: type)
+      result = yield fetch_table.call(params, user, from: type)
+      dataframe, _ = result
 
       graph_builder = GRAPH_BUILDER_MAPPINGS.fetch(params[:type])
       graph_builder.new.call(params, dataframe)

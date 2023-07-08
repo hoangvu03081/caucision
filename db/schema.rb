@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_29_154718) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_07_184010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -129,6 +129,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_154718) do
     t.text "graph_order", default: [], array: true
     t.text "promotions", default: [], array: true
     t.binary "model"
+    t.text "model_type"
     t.index ["description"], name: "index_projects_on_description"
     t.index ["name"], name: "index_projects_on_name"
     t.index ["user_id"], name: "index_projects_on_user_id"

@@ -155,7 +155,8 @@ class CampaignsController < ApplicationController
 
     if result.success?
       file = Tempfile.new(['optimization-result-', '.csv'])
-      result.value!.write_csv(file)
+      dataframe, _predicted_metadata = result.value!
+      dataframe.write_csv(file)
 
       send_file file,
                 type: 'text/csv; charset=utf-8; header=present',

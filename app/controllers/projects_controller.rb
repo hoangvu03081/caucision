@@ -97,6 +97,7 @@ class ProjectsController < ApplicationController
   params_for(:import_causal_graph) do
     required(:id).filled(:str?)
     required(:causal_graph).filled(:hash?)
+    required(:model_type).filled(:str?, included_in?: Constants::MODEL_TYPES)
   end
 
   def import_causal_graph

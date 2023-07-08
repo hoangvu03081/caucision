@@ -3,6 +3,7 @@ class InternalController < ApplicationController
     required(:project_id).filled(:str?)
     required(:user_id).filled(:str?)
     required(:data_schema).filled(:hash?)
+    required(:training_results).filled(:hash?)
   end
 
   def create_default_campaign
@@ -19,7 +20,8 @@ class InternalController < ApplicationController
       project_name: campaign.project.name,
       project_id: params[:project_id],
       user_id: params[:user_id],
-      campaign_id: campaign.id
+      campaign_id: campaign.id,
+      training_results: params[:training_results]
     )
 
     NotificationChannel.broadcast_to(

@@ -27,7 +27,7 @@ module Interactors
 
       serialized_graph = serialize_graph(causal_graph)
 
-      project.update!(causal_graph: serialized_graph)
+      project.update!(causal_graph: serialized_graph, model_type: params[:model_type])
 
       message_queue.direct_publish(
         Constants::Queue::DATA_IMPORTED, { project_id: project.id }
