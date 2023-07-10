@@ -7,6 +7,19 @@ class InternalController < ApplicationController
   end
 
   def create_default_campaign
+    training_results = params[:training_results].to_h.deep_symbolize_keys
+
+    training_results = training_results.sort do |a, b|
+      a[1][:rmse] <=> b[1][:rmse]
+    end.to_h do |key, value|
+      value = value.merge(
+        rmse: value[:rmse].round(3),
+        training_time: value[:training_time].round(3)
+      )
+
+      [key, value]
+    end
+
     campaign = Campaign.create!(
       id: params[:project_id],
       user_id: params[:user_id],
@@ -21,7 +34,7 @@ class InternalController < ApplicationController
       project_id: params[:project_id],
       user_id: params[:user_id],
       campaign_id: campaign.id,
-      training_results: params[:training_results]
+      training_results:
     )
 
     NotificationChannel.broadcast_to(
