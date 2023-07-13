@@ -17,6 +17,8 @@ module ApplicationCable
                  User.find(doorkeeper_token.resource_owner_id)
                end
 
+        Rails.logger.info("User: #{user}")
+
         reject_unauthorized_connection unless user
 
         user
