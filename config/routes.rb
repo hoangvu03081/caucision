@@ -44,4 +44,5 @@ Rails.application.routes.draw do
   post '/internal/default_campaign', to: 'internal#create_default_campaign'
   post '/users/complete_tour_guide', to: 'users#complete_tour_guide'
   get '/healthcheck', to: 'healthcheck#index'
+  get '/test_scylla', to: 'healthcheck#scylla'
 end

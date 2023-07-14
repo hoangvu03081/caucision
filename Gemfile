@@ -37,6 +37,7 @@ gem 'dry-monads'
 gem 'dry-validation'
 gem 'pagy', '~> 6.0'
 gem 'pg_search'
+gem 'lograge'
 
 group :test, :development do
   gem 'awesome_print'

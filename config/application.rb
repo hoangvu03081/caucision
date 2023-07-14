@@ -48,5 +48,13 @@ module Caucision
     config.hosts << /[a-z0-9]+/
     config.host_authorization = { exclude: ->(request) { request.path =~ /.*/ } }
     config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/, /file:\/\/*/, 'file://', nil]
+
+    config.lograge.enabled = true
+    config.lograge.base_controller_class = 'ActionController::API'
+    config.lograge.custom_options = lambda do |event|
+      exceptions = %w(controller action format id)
+
+      { params: event.payload[:params].except(*exceptions) }
+    end
   end
 end

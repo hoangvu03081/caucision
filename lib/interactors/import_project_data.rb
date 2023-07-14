@@ -5,6 +5,7 @@ module Interactors
     REQUIRED_COLUMNS = %w(promotion outcome user_id).freeze
 
     def call(params, user)
+      Rails.logger.info("vu.hoang (1)")
       dataframe = Polars.read_csv(params[:file], ignore_errors: true)
 
       missing_columns = REQUIRED_COLUMNS - dataframe.schema.keys
@@ -16,16 +17,20 @@ module Interactors
 
       project = Project.find_by(id: params[:id], user_id: user.id)
       return Failure(Errors::NotFoundError.build(Project, params[:id])) unless project
+      Rails.logger.info("vu.hoang (2)")
 
       table_name = project.data_id
+      Rails.logger.info("vu.hoang (3)")
 
       yield create_table.call(
         table_name:,
         schema: dataframe.schema,
         primary_key: :user_id
       )
+      Rails.logger.info("vu.hoang (4)")
 
       yield batch_insert.call(table_name:, dataframe:)
+      Rails.logger.info("vu.hoang (5)")
 
       data_schema = build_data_schema(dataframe)
 
