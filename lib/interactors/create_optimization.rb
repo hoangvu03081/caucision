@@ -26,8 +26,17 @@ module Interactors
       # TODO: Add proper error handling here
       return Failure(Errors::InternalError.new) unless response.status.success?
 
+      optimization_metadata = {
+        promotion_costs: promotion_costs.to_h,
+        budget: params[:budget]
+      }
+
       response_body = JSON.parse(response.body)
-      campaign.update!(optimization_result: MessagePack.pack(response_body))
+      # TODO: Use another column to store promotion costs
+      campaign.update!(
+        optimization_result: MessagePack.pack(response_body),
+        optimization_metadata: MessagePack.pack(optimization_metadata)
+      )
 
       Success()
     end

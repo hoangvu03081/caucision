@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
       delete :optimization, to: 'campaigns#delete_optimization'
       get :optimization_table, to: 'campaigns#fetch_optimization_table'
+      get :optimization_summary, to: 'campaigns#fetch_optimization_summary'
       get :optimization_result, to: 'campaigns#download_optimization_result'
       post :optimization, to: 'campaigns#create_optimization'
     end

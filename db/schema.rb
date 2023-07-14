@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_07_184010) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_14_183618) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_184010) do
     t.jsonb "data_schema", default: {}, null: false
     t.binary "optimization_metadata"
     t.binary "optimization_result"
+    t.jsonb "optimization_summary"
     t.index ["name"], name: "index_campaigns_on_name"
     t.index ["project_id"], name: "index_campaigns_on_project_id"
     t.index ["user_id"], name: "index_campaigns_on_user_id"

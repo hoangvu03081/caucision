@@ -166,6 +166,16 @@ class CampaignsController < ApplicationController
     end
   end
 
+  def fetch_optimization_summary
+    result = Interactors::FetchOptimizationSummary.new.call(params, current_user)
+
+    if result.success?
+      render(json: result.value!)
+    else
+      render_errors(result.failure)
+    end
+  end
+
   params_for(:create_optimization) do
     required(:id).filled(:str?)
     required(:budget).filled(:float)

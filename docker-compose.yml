@@ -69,6 +69,8 @@ services:
       - postgres
       - scylla
       - rabbitmq
+    ports:
+      - "8000:8000"
 
   caucision-ml-celery:
     image: hoangvu03081/caucision-ml-celery:0.7

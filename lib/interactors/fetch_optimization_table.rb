@@ -12,9 +12,9 @@ module Interactors
       dataframe = yield select.call(table_name: campaign.data_id)
       optimization_result = MessagePack.unpack(campaign.optimization_result)
 
-      optimization_result_seires = Polars::Series.new(BEST_PROMOTION_COLUMN, optimization_result)
+      optimization_result_series = Polars::Series.new(BEST_PROMOTION_COLUMN, optimization_result)
 
-      dataframe = dataframe.insert_at_idx(1, optimization_result_seires)
+      dataframe = dataframe.insert_at_idx(1, optimization_result_series)
 
       filtered_dataframe = Polars::QueryExtension.query(
         dataframe,
