@@ -2,7 +2,7 @@ require 'cassandra'
 
 module Scylla
   KEYSPACE = 'caucision'.freeze
-  HOSTS = [ENV.fetch('SCYLLA_HOST')].freeze
+  HOSTS = [Rails.env.production? ? IPSocket.getaddress(Socket.gethostname) : ENV.fetch('SCYLLA_HOST')].freeze
 
   KEYSPACE_DEFINITION = <<-KEYSPACE_CQL.freeze
     CREATE KEYSPACE #{KEYSPACE}
