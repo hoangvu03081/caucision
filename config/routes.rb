@@ -42,6 +42,9 @@ Rails.application.routes.draw do
 
   get :search, to: 'search#index'
 
+  get :sample_campaign_data, to: 'campaigns#sample_campaign_data'
+  get :sample_promotion_costs, to: 'campaigns#sample_promotion_costs'
+
   post '/internal/default_campaign', to: 'internal#create_default_campaign'
   post '/users/complete_tour_guide', to: 'users#complete_tour_guide'
   get '/healthcheck', to: 'healthcheck#index'

@@ -29,6 +29,10 @@ module Interactors
           columns: predicted_columns,
           precision: 3
         )
+
+        sorted_columns = Set['user_id', *predicted_columns, *filtered_dataframe.columns]
+
+        filtered_dataframe = filtered_dataframe.select(sorted_columns)
       end
 
       Success([filtered_dataframe, { predicted_columns: }])

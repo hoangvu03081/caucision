@@ -118,7 +118,12 @@ class CampaignsController < ApplicationController
 
   def delete_optimization
     campaign = fetch_campaign!
-    campaign.update!(optimization_result: nil)
+    campaign.update!(
+      optimization_result: nil,
+      optimization_summary: nil,
+      optimization_metadata: nil
+    )
+
     render(status: 200)
   end
 
@@ -191,6 +196,14 @@ class CampaignsController < ApplicationController
     else
       render_errors(result.failure)
     end
+  end
+
+  def sample_campaign_data
+    render(status: 201)
+  end
+
+  def sample_promotion_costs
+    render(status: 201)
   end
 
   private
