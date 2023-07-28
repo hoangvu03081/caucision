@@ -47,10 +47,15 @@ module Interactors
           framed_optimization_result
         )
 
+        customer_count = dataframe.length
+        mean_cost = total_cost / customer_count
+
         optimization_summary = {
           total_conversion_rate: total_conversion_rate.round(2),
           total_cost: total_cost.round(2),
           promotion_graph:,
+          customer_count:,
+          mean_cost: mean_cost.round(2),
           **optimization_metadata
         }
 
