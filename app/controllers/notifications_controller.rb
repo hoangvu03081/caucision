@@ -6,6 +6,10 @@ class NotificationsController < ApplicationController
                       .where(user_id: current_user.id)
                       .order(created_at: :desc)
 
+    notifications.training_results = notifications.training_results.sort do |a, b|
+      a[1][:rmse] <=> b[1][:rmse]
+    end
+
     render(json: notifications)
   end
 

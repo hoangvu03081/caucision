@@ -13,7 +13,7 @@ class InternalController < ApplicationController
       a[1][:rmse] <=> b[1][:rmse]
     end.to_h do |key, value|
       value = value.merge(
-        rmse: value[:rmse].round(5),
+        rmse: value[:rmse].round(7),
         training_time: value[:training_time].round(3)
       )
 
